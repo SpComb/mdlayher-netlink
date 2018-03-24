@@ -233,7 +233,6 @@ func (m *Message) UnmarshalBinary(b []byte) error {
 func checkMessage(m Message) error {
 	const success = 0
 
-	// Both "done" and "error" can contain error codes.
 	isDone := m.Header.Type == HeaderTypeDone
 	isError := m.Header.Type == HeaderTypeError
 
@@ -241,7 +240,7 @@ func checkMessage(m Message) error {
 	// "done" with no data means success.
 	case isDone && len(m.Data) == 0:
 		return nil
-	case isError, isDone:
+	case isError:
 		break
 	default:
 		return nil
